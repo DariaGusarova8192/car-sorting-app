@@ -1,21 +1,24 @@
 package model;
 
-import validation.CarValidator;
-
 import java.util.Objects;
 
 /**
  * Класс описывает автомобиль.
  *
- * Это основной кастомный класс проекта, который будет использоваться:
- * - при заполнении коллекции вручную;
+ * Это основной кастомный класс проекта.
+ * Объекты этого класса используются:
+ * - при ручном вводе;
  * - при чтении из файла;
  * - при случайной генерации;
  * - при сортировке;
  * - при поиске и подсчёте элементов.
  *
  * Поля сделаны final, чтобы объект автомобиля нельзя было изменить после создания.
- * Объект создаётся через паттерн Builder.
+ *
+ * ВАЖНО:
+ * В основном коде проекта объект Car рекомендуется создавать через CarBuilder.
+ * Сам Builder вынесен в отдельный класс:
+ * builder.CarBuilder
  */
 public final class Car {
     private final int power;
@@ -23,15 +26,15 @@ public final class Car {
     private final int year;
 
     /**
-     * Закрытый конструктор.
+     * Конструктор автомобиля.
      *
-     * Объект Car создаётся только через Builder.
-     * Это сделано для выполнения требования задания по паттерну Builder.
+     * В обычном коде проекта лучше использовать не конструктор напрямую,
+     * а CarBuilder, потому что в Builder выполняется проверка данных.
      */
-    private Car(Builder builder) {
-        this.power = builder.power;
-        this.model = builder.model.trim();
-        this.year = builder.year;
+    public Car(int power, String model, int year) {
+        this.power = power;
+        this.model = model == null ? null : model.trim();
+        this.year = year;
     }
 
     public int getPower() {
@@ -44,58 +47,6 @@ public final class Car {
 
     public int getYear() {
         return year;
-    }
-
-    /**
-     * Удобный способ создать Builder.
-     *
-     * Можно писать так:
-     * Car car = Car.builder()
-     *         .setPower(150)
-     *         .setModel("Toyota")
-     *         .setYear(2020)
-     *         .build();
-     */
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    /**
-     * Builder для создания объекта Car.
-     *
-     * Нужен, чтобы не создавать объект через длинный конструктор
-     * и чтобы было понятно, какое значение в какое поле записывается.
-     */
-    public static class Builder {
-        private int power;
-        private String model;
-        private int year;
-
-        public Builder setPower(int power) {
-            this.power = power;
-            return this;
-        }
-
-        public Builder setModel(String model) {
-            this.model = model;
-            return this;
-        }
-
-        public Builder setYear(int year) {
-            this.year = year;
-            return this;
-        }
-
-        /**
-         * Создаёт объект Car.
-         *
-         * Перед созданием вызывается валидация.
-         * Если данные некорректные, будет выброшено исключение IllegalArgumentException.
-         */
-        public Car build() {
-            CarValidator.validateOrThrow(power, model, year);
-            return new Car(this);
-        }
     }
 
     /**
@@ -113,7 +64,10 @@ public final class Car {
     /**
      * Метод нужен для сравнения автомобилей.
      *
-     * Это пригодится в тестах и в многопоточном подсчёте количества вхождений элемента.
+     * Это пригодится:
+     * - в тестах;
+     * - при поиске элемента;
+     * - при многопоточном подсчёте количества вхождений элемента.
      */
     @Override
     public boolean equals(Object object) {

@@ -8,7 +8,7 @@ import java.time.Year;
  * Класс отвечает за проверку данных автомобиля.
  *
  * Используется:
- * - перед созданием объекта Car через Builder;
+ * - перед созданием объекта Car через CarBuilder;
  * - при ручном вводе;
  * - при чтении данных из файла;
  * - при случайной генерации данных;
@@ -28,11 +28,13 @@ public final class CarValidator {
 
     private CarValidator() {
         // Закрытый конструктор запрещает создавать объект CarValidator.
-        // Используем только static-методы.
+        // Класс используется только через static-методы.
     }
 
     /**
      * Проверяет уже созданный объект Car.
+     *
+     * Метод может пригодиться в тестах, сервисах и при работе с коллекциями.
      */
     public static boolean isValid(Car car) {
         if (car == null) {
@@ -45,8 +47,11 @@ public final class CarValidator {
     /**
      * Проверяет отдельные поля автомобиля.
      *
-     * Этот метод удобно использовать до создания объекта Car,
-     * например при вводе данных пользователем или чтении строки из файла.
+     * Этот метод удобно использовать до создания объекта Car:
+     * - при ручном вводе;
+     * - при чтении строки из файла;
+     * - при генерации случайных данных;
+     * - внутри CarBuilder.
      */
     public static boolean isValid(int power, String model, int year) {
         return isPowerValid(power)
@@ -57,7 +62,7 @@ public final class CarValidator {
     /**
      * Проверяет данные и выбрасывает исключение, если данные некорректные.
      *
-     * Этот метод используется в Builder перед созданием объекта Car.
+     * Этот метод используется в CarBuilder перед созданием объекта Car.
      */
     public static void validateOrThrow(int power, String model, int year) {
         String error = getValidationError(power, model, year);
@@ -92,6 +97,8 @@ public final class CarValidator {
 
     /**
      * Проверяет мощность автомобиля.
+     *
+     * Мощность должна быть положительной и не больше MAX_POWER.
      */
     public static boolean isPowerValid(int power) {
         return power >= MIN_POWER && power <= MAX_POWER;
@@ -99,6 +106,8 @@ public final class CarValidator {
 
     /**
      * Проверяет модель автомобиля.
+     *
+     * Модель не должна быть null, пустой строкой или строкой только из пробелов.
      */
     public static boolean isModelValid(String model) {
         if (model == null) {
@@ -113,6 +122,8 @@ public final class CarValidator {
 
     /**
      * Проверяет год производства автомобиля.
+     *
+     * Минимальный год — 1886, максимальный — текущий год.
      */
     public static boolean isYearValid(int year) {
         return year >= MIN_YEAR && year <= MAX_YEAR;

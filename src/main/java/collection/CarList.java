@@ -1,5 +1,7 @@
 package collection;
 
+import model.Car;
+
 import java.util.AbstractList;
 
 public class CarList extends AbstractList<Car> {

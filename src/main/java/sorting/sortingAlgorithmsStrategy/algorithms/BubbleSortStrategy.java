@@ -12,7 +12,7 @@ public class BubbleSortStrategy implements Strategy {
 
     @Override
     public List<Car> execute(CarList cars, FieldContext context) {
-        CarList carsCopy = Strategy.getArrayCopy(cars);
+        CarList carsCopy = new CarList(cars);
 
         Car bubble;
         boolean needIteration = true;
@@ -34,7 +34,7 @@ public class BubbleSortStrategy implements Strategy {
 
     @Override
     public List<Car> executeAdditionalSortByPower(CarList cars) {
-        CarList carsCopy = Strategy.getArrayCopy(cars);
+        CarList carsCopy = new CarList(cars);
 
         Car bubble;
         boolean needIteration = true;

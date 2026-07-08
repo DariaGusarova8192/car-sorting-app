@@ -12,7 +12,7 @@ public class InsertionSortStrategy implements Strategy {
 
     @Override
     public List<Car> execute(CarList cars, FieldContext context) {
-        CarList carsCopy = Strategy.getArrayCopy(cars);
+        CarList carsCopy = new CarList(cars);
 
         Car valueForInsert;
         int j;
@@ -33,7 +33,7 @@ public class InsertionSortStrategy implements Strategy {
 
     @Override
     public List<Car> executeAdditionalSortByPower(CarList cars) {
-        CarList carsCopy = Strategy.getArrayCopy(cars);
+        CarList carsCopy = new CarList(cars);
 
         ArrayList<Integer> indexes = new ArrayList<>();
         int i;

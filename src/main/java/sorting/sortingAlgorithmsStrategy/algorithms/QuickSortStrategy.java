@@ -13,7 +13,7 @@ public class QuickSortStrategy implements Strategy {
 
     @Override
     public List<Car> execute(CarList cars, FieldContext context) {
-        CarList carsCopy = Strategy.getArrayCopy(cars);
+        CarList carsCopy = new CarList(cars);
 
         quickSort(carsCopy, 0, carsCopy.size() - 1, context);
         return carsCopy;
@@ -51,7 +51,7 @@ public class QuickSortStrategy implements Strategy {
 
     @Override
     public List<Car> executeAdditionalSortByPower(CarList cars) {
-        CarList carsCopy = Strategy.getArrayCopy(cars);
+        CarList carsCopy = new CarList(cars);
 
         ArrayList<Integer> indexes = new ArrayList<>();
         CarList carsForSorting = new CarList();

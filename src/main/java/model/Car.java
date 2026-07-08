@@ -20,7 +20,7 @@ import java.util.Objects;
  * Сам Builder вынесен в отдельный класс:
  * builder.CarBuilder
  */
-public final class Car {
+public final class Car implements Comparable<Car>{
     private final int power;
     private final String model;
     private final int year;
@@ -94,5 +94,39 @@ public final class Car {
     @Override
     public int hashCode() {
         return Objects.hash(power, model, year);
+    }
+
+    // для сортировки
+    @Override
+    public int compareTo(Car atherCar) {
+        //model, year, power
+        if(model.compareTo(atherCar.model) < 0) {
+            return -1;
+        }
+        if(model.compareTo(atherCar.model) > 0) {
+            return 1;
+        }
+        if(year < atherCar.year) {
+            return -1;
+        }
+        if(year > atherCar.year) {
+            return 1;
+        }
+        return Integer.compare(power, atherCar.getPower());
+    }
+
+    // для сортировки
+    public int compareByPower(Car atherCar) {
+        return Integer.compare(power, atherCar.getPower());
+    }
+
+    // для сортировки
+    public int compareByModel(Car atherCar) {
+        return model.compareTo(atherCar.getModel());
+    }
+
+    // для сортировки
+    public int compareByYear(Car atherCar) {
+        return Integer.compare(year, atherCar.getYear());
     }
 }

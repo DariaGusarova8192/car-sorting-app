@@ -4,5 +4,5 @@ import model.Car;
 
 public interface FieldStrategy {
 
-    int execute(Car currentCar, Car atherCar);
+    int execute(Car currentCar, Car otherCar);
 }

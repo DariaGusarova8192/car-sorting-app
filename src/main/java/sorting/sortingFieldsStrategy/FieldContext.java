@@ -10,7 +10,7 @@ public class FieldContext {
         this.fieldStrategy = fieldStrategy;
     }
 
-    public int doStrategy(Car currentCar, Car atherCar) {
-        return fieldStrategy.execute(currentCar, atherCar);
+    public int doStrategy(Car currentCar, Car otherCar) {
+        return fieldStrategy.execute(currentCar, otherCar);
     }
 }

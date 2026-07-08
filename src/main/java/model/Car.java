@@ -98,35 +98,35 @@ public final class Car implements Comparable<Car>{
 
     // для сортировки
     @Override
-    public int compareTo(Car atherCar) {
+    public int compareTo(Car otherCar) {
         //model, year, power
-        if(model.compareTo(atherCar.model) < 0) {
+        if(model.compareTo(otherCar.model) < 0) {
             return -1;
         }
-        if(model.compareTo(atherCar.model) > 0) {
+        if(model.compareTo(otherCar.model) > 0) {
             return 1;
         }
-        if(year < atherCar.year) {
+        if(year < otherCar.year) {
             return -1;
         }
-        if(year > atherCar.year) {
+        if(year > otherCar.year) {
             return 1;
         }
-        return Integer.compare(power, atherCar.getPower());
+        return Integer.compare(power, otherCar.getPower());
     }
 
     // для сортировки
-    public int compareByPower(Car atherCar) {
-        return Integer.compare(power, atherCar.getPower());
+    public int compareByPower(Car otherCar) {
+        return Integer.compare(power, otherCar.getPower());
     }
 
     // для сортировки
-    public int compareByModel(Car atherCar) {
-        return model.compareTo(atherCar.getModel());
+    public int compareByModel(Car otherCar) {
+        return model.compareTo(otherCar.getModel());
     }
 
     // для сортировки
-    public int compareByYear(Car atherCar) {
-        return Integer.compare(year, atherCar.getYear());
+    public int compareByYear(Car otherCar) {
+        return Integer.compare(year, otherCar.getYear());
     }
 }

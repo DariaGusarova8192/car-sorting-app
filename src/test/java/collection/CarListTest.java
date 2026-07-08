@@ -7,6 +7,9 @@ public class CarListTest {
         runAllCarListTests();
     }
     private static void runAllCarListTests() {
+        defaultConstructorTest();
+        constructorWithCapacityTest();
+        copyConstructorTest();
         getTest();
         addTest();
         getSizeTest();
@@ -14,8 +17,6 @@ public class CarListTest {
         removeTest();
         setTest();
         clearTest();
-        defaultConstructorTest();
-        constructorThisCapacityTest();
         System.out.println("ALL CARLIST TESTS PASSED");
     }
     private static void defaultConstructorTest() {
@@ -25,7 +26,7 @@ public class CarListTest {
         }
         System.out.println("DEFAULT CONSTRUCTOR PASSED");
     }
-    private static void constructorThisCapacityTest() {
+    private static void constructorWithCapacityTest() {
         CarList list = new CarList(5);
         list.add(new Car(1,"A",1));
         list.add(new Car(2,"B",2));
@@ -33,6 +34,18 @@ public class CarListTest {
             throw new RuntimeException("CONSTRUCTOR THIS CAPACITY FAILED");
         }
         System.out.println("CONSTRUCTOR THIS CAPACITY PASSED");
+    }
+    private static void copyConstructorTest() {
+        CarList list = new CarList(5);
+        list.add(new Car(1,"A",1));
+        list.add(new Car(2,"B",2));
+        String expected = "[Car{power=1, model='A', year=1}, Car{power=2, model='B', year=2}]";
+        String actual = new CarList(list).toString();
+        if (!expected.equals(actual)) {
+            throw new RuntimeException("TEST FAILED: expected " + expected + " but got " + actual);
+        }
+        System.out.println("COPY CONSTRUCTOR TEST PASSED");
+
     }
     private static void getTest() {
         CarList list = new CarList();

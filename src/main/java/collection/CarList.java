@@ -23,6 +23,16 @@ public class CarList extends AbstractList<Car> {
             throw new IllegalArgumentException("Illegal capacity: " + capacity);
         }
     }
+    public CarList(CarList carList) {
+        if(carList == null) {
+            throw new IllegalArgumentException("CarList is null");
+        }
+        this.size = carList.size;
+        this.carArray = new Car[carList.carArray.length];
+        for(int i = 0; i < size; i++) {
+            this.carArray[i] = carList.carArray[i];
+        }
+    }
     @Override
     public Car get(int index) {
         if (index < 0 || index >= size) {

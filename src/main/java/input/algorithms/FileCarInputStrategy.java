@@ -23,6 +23,7 @@ import java.util.stream.Stream;
  * 90;Lada;2015
  * 220;BMW;2021
  *
+ * Файл читается целиком.
  * Некорректные строки не добавляются в коллекцию.
  * Для таких строк выводится сообщение в консоль.
  *
@@ -33,38 +34,30 @@ public class FileCarInputStrategy implements CarInputStrategy {
     private static final String DELIMITER = ";";
 
     private final String filePath;
-    private final int count;
 
     /**
      * @param filePath путь к файлу с автомобилями
-     * @param count максимальное количество автомобилей, которое нужно прочитать
      */
-    public FileCarInputStrategy(String filePath, int count) {
+    public FileCarInputStrategy(String filePath) {
         if (filePath == null || filePath.trim().isEmpty()) {
             throw new IllegalArgumentException("Путь к файлу не должен быть пустым");
         }
 
-        if (count < 0) {
-            throw new IllegalArgumentException("Количество автомобилей не может быть отрицательным");
-        }
-
         this.filePath = filePath;
-        this.count = count;
     }
 
     /**
-     * Читает файл, преобразует корректные строки в объекты Car
+     * Читает файл целиком, преобразует корректные строки в объекты Car
      * и добавляет их в кастомную коллекцию CarList.
      */
     @Override
     public CarList inputCars() {
-        CarList cars = new CarList(count);
+        CarList cars = new CarList();
 
         try (Stream<String> lines = Files.lines(Paths.get(filePath))) {
             lines.map(this::parseLine)
                     .filter(Optional::isPresent)
                     .map(Optional::get)
-                    .limit(count)
                     .forEach(cars::add);
         } catch (IOException exception) {
             System.out.println("Ошибка чтения файла: " + exception.getMessage());

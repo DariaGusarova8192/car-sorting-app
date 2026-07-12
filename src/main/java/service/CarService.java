@@ -25,8 +25,8 @@ public class CarService {
     public void selectInputMethod(int selection, int amountOfData) {
         switch (selection){
             case 1:
-                 CarInputService fileInputService = new CarInputService(new FileCarInputStrategy("cars.txt", amountOfData));
-                 carList = fileInputService.inputCars();
+                CarInputService fileInputService = new CarInputService(new FileCarInputStrategy("cars.txt"));
+                carList = fileInputService.inputCars();
                 break;
             case 2:
                 CarInputService manualInputService = new CarInputService(new ManualCarInputStrategy( new Scanner(System.in), amountOfData));

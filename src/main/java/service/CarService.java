@@ -5,6 +5,7 @@ import input.CarInputService;
 import input.algorithms.FileCarInputStrategy;
 import input.algorithms.ManualCarInputStrategy;
 import input.algorithms.RandomCarInputStrategy;
+import output.FileOutput;
 import sorting.sortingAlgorithmsStrategy.Context;
 import sorting.sortingAlgorithmsStrategy.algorithms.BubbleSortStrategy;
 import sorting.sortingAlgorithmsStrategy.algorithms.InsertionSortStrategy;
@@ -71,11 +72,14 @@ public class CarService {
             default:
                 System.out.println("Неверный пункт меню");
         }
-        SortResult result = doSort();
     }
     public SortResult doSort() {
         CarList sortedCars = (CarList) sortingContext.doStrategy(carList, fieldContext);
         CarList additionalSortedCars = (CarList) sortingContext.doAdditionalStrategy(carList);
         return new SortResult(sortedCars, additionalSortedCars);
+    }
+    public void output(boolean isAppendMode) {
+        FileOutput fileOutput = new FileOutput(isAppendMode);
+        fileOutput.output(doSort());
     }
 }

@@ -25,10 +25,10 @@ public class Menu {
     private static void listenInputMethod() {
         while (isRunning) {
             System.out.println("===========Выберите способ ввода данных===========");
-            System.out.println("Ввести данные из файла - Нажмите 1");
-            System.out.println("Ввести данные вручную - Нажмите 2");
-            System.out.println("Сгенерировать случайные данные - Нажмите 3");
-            System.out.println("Выход - Нажмите 4");
+            System.out.println("Ввести данные из файла - Введите 1");
+            System.out.println("Ввести данные вручную - Введите 2");
+            System.out.println("Сгенерировать случайные данные - Введите 3");
+            System.out.println("Выход - Введите 4");
             int selectedMenuItem = listener();
             int amountOfData = 0;
             if(selectedMenuItem == 4) {
@@ -58,10 +58,10 @@ public class Menu {
     private static void listenSortingMethod() {
         while (true) {
             System.out.println("===========Выберите способ сортировки автомобилей===========");
-            System.out.println("Пузырьковая сортировка - Нажмите 1");
-            System.out.println("Быстрая сортировка - Нажмите 2");
-            System.out.println("Сортировка вставками - Нажмите 3");
-            System.out.println("Вернуться к меню ввода данных - Нажмите 4");
+            System.out.println("Пузырьковая сортировка - Введите 1");
+            System.out.println("Быстрая сортировка - Введите 2");
+            System.out.println("Сортировка вставками - Введите 3");
+            System.out.println("Вернуться к меню ввода данных - Введите 4");
             int selectedSortingAlgorithm = listener();
             if (selectedSortingAlgorithm == 4) {
                 break;
@@ -73,16 +73,31 @@ public class Menu {
     private static void listenFieldForSorting() {
         while (true) {
             System.out.println("============Выберите поле, по которому необходимо отсортировать автомобили===========");
-            System.out.println("Сортировать по мощности - Нажмите 1");
-            System.out.println("Сортировать по модели - Нажмите 2");
-            System.out.println("Сортировать по году выпуска - Нажмите 3");
-            System.out.println("Сортировать по всем полям - Нажмите 4");
-            System.out.println("Вернуться к меню выбора сортировки - Нажмите 5");
+            System.out.println("Сортировать по мощности - Введите 1");
+            System.out.println("Сортировать по модели - Введите 2");
+            System.out.println("Сортировать по году выпуска - Введите 3");
+            System.out.println("Сортировать по всем полям - Введите 4");
+            System.out.println("Вернуться к меню выбора сортировки - Введите 5");
             int fieldForSorting = listener();
             if (fieldForSorting == 5) {
                 break;
             }
             service.selectFieldForSorting(fieldForSorting);
+            boolean isAppendMode = listenAppendMode()==1 ? true : false;
+            service.output(isAppendMode);
+        }
+    }
+    private static int listenAppendMode() {
+        while (true) {
+            System.out.println("============Включить режим добавления данных?===========");
+            System.out.println("Да - Введите 1");
+            System.out.println("Нет - Введите 2");
+            int choice = listener();
+            if(choice==1||choice==2) {
+                return choice;
+            } else {
+                System.out.println("Введите корректный вариант выбора");
+            }
         }
     }
 }

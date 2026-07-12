@@ -21,7 +21,7 @@ public class Menu {
                 scanner.nextLine();
                 return value;
             } catch (Exception e) {
-                System.out.println("Введите корректное число:");
+                System.out.println("Вы ввели некорректное число:");
                 scanner.nextLine();
             }
         }
@@ -41,7 +41,9 @@ public class Menu {
                 if (selectedMenuItem == 2 || selectedMenuItem == 3) {
                     amountOfData = listenAmountOfData();
                 }
-                service.selectInputMethod(selectedMenuItem, amountOfData);
+                if(!service.selectInputMethod(selectedMenuItem, amountOfData)) {
+                    continue;
+                }
                 listenActionWithCars();
             }
         }
@@ -93,7 +95,9 @@ public class Menu {
             if (selectedSortingAlgorithm == 4) {
                 break;
             }
-            service.selectSortingAlgorithm(selectedSortingAlgorithm);
+            if(!service.selectSortingAlgorithm(selectedSortingAlgorithm)) {
+                continue;
+            }
             listenFieldForSorting();
         }
     }
@@ -109,7 +113,9 @@ public class Menu {
             if (fieldForSorting == 5) {
                 break;
             }
-            service.selectFieldForSorting(fieldForSorting);
+            if(!service.selectFieldForSorting(fieldForSorting)) {
+                continue;
+            }
             boolean isAppendMode = listenAppendMode()==1;
             service.sortingOutput(isAppendMode);
         }
@@ -125,7 +131,7 @@ public class Menu {
             if(threadCount > 0) {
                 break;
             }
-            System.out.println("Введите корректное число потоков");
+            System.out.println("Вы ввели некорректное число потоков");
         }
         while (true) {
             System.out.println("Введите мощность автомобиля");
@@ -133,7 +139,7 @@ public class Menu {
             if(isPowerValid(power)) {
                 break;
             }
-            System.out.println("Введите корректную мощность автомобиля");
+            System.out.println("Вы ввели некорректную мощность автомобиля");
         }
         while (true) {
             System.out.println("Введите модель автомобиля");
@@ -141,7 +147,7 @@ public class Menu {
             if(isModelValid(model)) {
                 break;
             }
-            System.out.println("Введите корректную модель автомобиля");
+            System.out.println("Вы ввели некорректную модель автомобиля");
         }
         while (true) {
             System.out.println("Введите год выпуска автомобиля");
@@ -149,7 +155,7 @@ public class Menu {
             if(isYearValid(year)) {
                 break;
             }
-            System.out.println("Введите корректный год выпуска автомобиля");
+            System.out.println("Вы ввели некорректный год выпуска автомобиля");
         }
         boolean isAppendMode = listenAppendMode()==1;
         service.searchingOutput(power, model, year, threadCount, isAppendMode);

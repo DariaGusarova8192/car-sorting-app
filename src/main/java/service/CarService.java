@@ -24,55 +24,58 @@ public class CarService {
     private final Context sortingContext = new Context();
     private final FieldContext fieldContext = new FieldContext();
     private final MultiThreadCounter counter = new MultiThreadCounter();
-    public void selectInputMethod(int selection, int amountOfData) {
+    public boolean selectInputMethod(int selection, int amountOfData) {
         switch (selection){
             case 1:
                 CarInputService fileInputService = new CarInputService(new FileCarInputStrategy("cars.txt"));
                 carList = fileInputService.inputCars();
-                break;
+                return true;
             case 2:
                 CarInputService manualInputService = new CarInputService(new ManualCarInputStrategy( new Scanner(System.in), amountOfData));
                 carList = manualInputService.inputCars();
-                break;
+                return true;
             case 3:
                 CarInputService randomInputService = new CarInputService(new RandomCarInputStrategy(amountOfData));
                 carList = randomInputService.inputCars();
-                break;
+                return true;
             default:
-                System.out.println("Неверный пункт меню");
+                System.out.println("Вы ввели некорректный пункт меню");
+                return false;
         }
     }
-    public void selectSortingAlgorithm(int selection) {
+    public boolean selectSortingAlgorithm(int selection) {
         switch (selection) {
             case 1:
                 sortingContext.setStrategy(new BubbleSortStrategy());
-                break;
+                return true;
             case 2:
                 sortingContext.setStrategy(new QuickSortStrategy());
-                break;
+                return true;
             case 3:
                 sortingContext.setStrategy(new InsertionSortStrategy());
-                break;
+                return true;
             default:
-                System.out.println("Неверный пункт меню");
+                System.out.println("Вы ввели некорректный пункт меню");
+                return false;
         }
     }
-    public void selectFieldForSorting(int selection) {
+    public boolean selectFieldForSorting(int selection) {
         switch (selection) {
             case 1:
                 fieldContext.setStrategy(new PowerSortStrategy());
-                break;
+                return true;
             case 2:
                 fieldContext.setStrategy(new ModelSortStrategy());
-                break;
+                return true;
             case 3:
                 fieldContext.setStrategy(new YearSortStrategy());
-                break;
+                return true;
             case 4:
                 fieldContext.setStrategy(new AllFieldsSortStrategy());
-                break;
+                return true;
             default:
-                System.out.println("Неверный пункт меню");
+                System.out.println("Вы ввели некорректный пункт меню");
+                return false;
         }
     }
     public SortResult doSort() {

@@ -48,10 +48,10 @@ public class BubbleSortStrategy implements Strategy {
             }
             int j = i + 1;
             while (j < carsCopy.size()) {
-                while (carsCopy.get(j).getPower() % 2 != 0) {
+                while (j < carsCopy.size() && carsCopy.get(j).getPower() % 2 != 0) {
                     j++;
                 }
-                if (carsCopy.get(i).compareByPower(carsCopy.get(j)) > 0) {
+                if (j < carsCopy.size() && carsCopy.get(i).compareByPower(carsCopy.get(j)) > 0) {
                     bubble = carsCopy.get(i);
                     carsCopy.set(i, carsCopy.get(j));
                     carsCopy.set(j, bubble);

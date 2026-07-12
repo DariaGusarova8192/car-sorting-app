@@ -5,6 +5,7 @@ import input.CarInputService;
 import input.algorithms.FileCarInputStrategy;
 import input.algorithms.ManualCarInputStrategy;
 import input.algorithms.RandomCarInputStrategy;
+import model.Car;
 import output.FileOutput;
 import sorting.sortingAlgorithmsStrategy.Context;
 import sorting.sortingAlgorithmsStrategy.algorithms.BubbleSortStrategy;
@@ -22,6 +23,7 @@ public class CarService {
     private CarList carList;
     private final Context sortingContext = new Context();
     private final FieldContext fieldContext = new FieldContext();
+    private final MultiThreadCounter counter = new MultiThreadCounter();
     public void selectInputMethod(int selection, int amountOfData) {
         switch (selection){
             case 1:
@@ -78,9 +80,21 @@ public class CarService {
         CarList additionalSortedCars = (CarList) sortingContext.doAdditionalStrategy(carList);
         return new SortResult(sortedCars, additionalSortedCars);
     }
-    public void output(boolean isAppendMode) {
+    public int doCountOccurrences(Car car, int countThreads) {
+        return counter.countOccurrences(carList, car, countThreads) ;
+    }
+    public void sortingOutput(boolean isAppendMode) {
         FileOutput fileOutput = new FileOutput(isAppendMode);
         SortResult result = doSort();
-        fileOutput.output(result);
+        fileOutput.sortResultOutput(result);
+    }
+    public void searchingOutput(int power, String model, int year, int countThreads, boolean isAppendMode) {
+        FileOutput fileOutput = new FileOutput(isAppendMode);
+        Car carForSearch = compileCar(power, model, year);
+        int result = doCountOccurrences(carForSearch, countThreads);
+        fileOutput.searchResultOutput(carForSearch, result, countThreads);
+    }
+    private Car compileCar(int power, String model, int year) {
+        return new Car(power, model, year);
     }
 }

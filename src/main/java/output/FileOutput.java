@@ -17,7 +17,7 @@ public class FileOutput {
     public FileOutput(boolean isAppendMode) {
         this.isAppendMode = isAppendMode;
     }
-    private List<String> compileTextResult(SortResult result) {
+    private List<String> compileSortingResult(SortResult result) {
         List<String> stringResult = new ArrayList<>();
         stringResult.add("===========Обычная сортировка===========");
         for(Car car : result.getSortedCars()) {
@@ -31,13 +31,34 @@ public class FileOutput {
         return stringResult;
     }
 
-    public void output(SortResult result) {
+    public void sortResultOutput(SortResult result) {
         Path path = Paths.get("sorting_result.txt");
         try {
             if(isAppendMode) {
-                Files.write(path, compileTextResult(result), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                Files.write(path, compileSortingResult(result), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             } else {
-                Files.write(path, compileTextResult(result), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+                Files.write(path, compileSortingResult(result), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void searchResultOutput(Car car, int result, int countThreads) {
+        Path path = Paths.get("searching_result.txt");
+        List<String> stringResult = new ArrayList<>();
+        stringResult.add("===========Результат поиска===========");
+        stringResult.add("Искомый автомобиль:");
+        stringResult.add(car.toString());
+        stringResult.add("===========Количество потоков===========");
+        stringResult.add(String.valueOf(countThreads));
+        stringResult.add("===========Количество вхождений===========");
+        stringResult.add(String.valueOf(result));
+
+        try {
+            if(isAppendMode) {
+                Files.write(path, stringResult, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            } else {
+                Files.write(path, stringResult, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
             }
         } catch (IOException e) {
             e.printStackTrace();

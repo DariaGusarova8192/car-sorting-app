@@ -80,6 +80,7 @@ public class CarService {
     }
     public void output(boolean isAppendMode) {
         FileOutput fileOutput = new FileOutput(isAppendMode);
-        fileOutput.output(doSort());
+        SortResult result = doSort();
+        fileOutput.output(result);
     }
 }

@@ -18,11 +18,12 @@ public class FileOutput {
         this.isAppendMode = isAppendMode;
     }
     private List<String> compileTextResult(SortResult result) {
-        List<String> stringResult = new ArrayList<String>();
+        List<String> stringResult = new ArrayList<>();
         stringResult.add("===========Обычная сортировка===========");
         for(Car car : result.getSortedCars()) {
             stringResult.add(car.toString());
         }
+        stringResult.add("");
         stringResult.add("===========Сортировка четных===========");
         for(Car car : result.getAdditionalSortedCars()) {
             stringResult.add(car.toString());
@@ -33,7 +34,7 @@ public class FileOutput {
     public void output(SortResult result) {
         Path path = Paths.get("sorting_result.txt");
         try {
-            if(isAppendMode == true) {
+            if(isAppendMode) {
                 Files.write(path, compileTextResult(result), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             } else {
                 Files.write(path, compileTextResult(result), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);

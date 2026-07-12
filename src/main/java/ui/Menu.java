@@ -83,7 +83,7 @@ public class Menu {
                 break;
             }
             service.selectFieldForSorting(fieldForSorting);
-            boolean isAppendMode = listenAppendMode()==1 ? true : false;
+            boolean isAppendMode = listenAppendMode()==1;
             service.output(isAppendMode);
         }
     }

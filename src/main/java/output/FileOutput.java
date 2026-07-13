@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import service.CountResult;
 
 public class FileOutput {
     private final boolean isAppendMode;
@@ -43,19 +44,25 @@ public class FileOutput {
             e.printStackTrace();
         }
     }
-    public void searchResultOutput(Car car, int result, int countThreads) {
+    public void searchResultOutput(CountResult result) {
         Path path = Paths.get("searching_result.txt");
         List<String> stringResult = new ArrayList<>();
+
         stringResult.add("===========Результат поиска===========");
         stringResult.add("Искомый автомобиль:");
-        stringResult.add(car.toString());
-        stringResult.add("===========Количество потоков===========");
-        stringResult.add(String.valueOf(countThreads));
+        stringResult.add(result.getTargetCar().toString());
+
+        stringResult.add("===========Количество потоков, введённое пользователем===========");
+        stringResult.add(String.valueOf(result.getRequestedThreadCount()));
+
+        stringResult.add("===========Фактическое количество потоков===========");
+        stringResult.add(String.valueOf(result.getActualThreadCount()));
+
         stringResult.add("===========Количество вхождений===========");
-        stringResult.add(String.valueOf(result));
+        stringResult.add(String.valueOf(result.getOccurrencesCount()));
 
         try {
-            if(isAppendMode) {
+            if (isAppendMode) {
                 Files.write(path, stringResult, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             } else {
                 Files.write(path, stringResult, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);

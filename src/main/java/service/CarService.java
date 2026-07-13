@@ -83,8 +83,8 @@ public class CarService {
         CarList additionalSortedCars = (CarList) sortingContext.doAdditionalStrategy(carList);
         return new SortResult(sortedCars, additionalSortedCars);
     }
-    public int doCountOccurrences(Car car, int countThreads) {
-        return counter.countOccurrences(carList, car, countThreads) ;
+    public CountResult doCountOccurrences(Car car, int countThreads) {
+        return counter.countOccurrences(carList, car, countThreads);
     }
     public void sortingOutput(boolean isAppendMode) {
         FileOutput fileOutput = new FileOutput(isAppendMode);
@@ -94,8 +94,8 @@ public class CarService {
     public void searchingOutput(int power, String model, int year, int countThreads, boolean isAppendMode) {
         FileOutput fileOutput = new FileOutput(isAppendMode);
         Car carForSearch = compileCar(power, model, year);
-        int result = doCountOccurrences(carForSearch, countThreads);
-        fileOutput.searchResultOutput(carForSearch, result, countThreads);
+        CountResult result = doCountOccurrences(carForSearch, countThreads);
+        fileOutput.searchResultOutput(result);
     }
     private Car compileCar(int power, String model, int year) {
         return new Car(power, model, year);

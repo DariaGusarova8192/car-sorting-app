@@ -8,36 +8,32 @@ import model.Car;
  *
  * Закрывает дополнительное задание 4:
  * "реализовать многопоточный метод, подсчитывающий количество вхождений элемента N
- * в коллекцию и выводящий результат в консоль".
+ * в коллекцию".
  *
  * В нашем проекте:
  * - коллекция — это CarList;
  * - элемент N — это объект Car;
  * - сравнение автомобилей выполняется через equals().
  *
- * Коллекция делится на несколько частей.
- * Каждая часть обрабатывается отдельным потоком.
+ * Важно:
+ * этот класс только считает и возвращает результат.
+ * Вывод в консоль или файл выполняется в других классах.
  */
 public class MultiThreadCounter {
 
     /**
      * Считает, сколько раз targetCar встречается в коллекции cars.
      *
-     * Метод также выводит результат в консоль,
-     * как требуется в задании.
-     *
      * @param cars коллекция автомобилей
      * @param targetCar автомобиль, количество вхождений которого нужно найти
-     * @param threadCount количество потоков
-     * @return количество найденных вхождений
+     * @param threadCount количество потоков, которое ввёл пользователь
+     * @return объект CountResult с результатом подсчёта
      */
-    public int countOccurrences(CarList cars, Car targetCar, int threadCount) {
+    public CountResult countOccurrences(CarList cars, Car targetCar, int threadCount) {
         validateInput(cars, targetCar, threadCount);
 
         if (cars.size() == 0) {
-            System.out.println("Коллекция пустая.");
-            System.out.println("Количество вхождений: 0");
-            return 0;
+            return new CountResult(targetCar, 0, threadCount, 0);
         }
 
         int actualThreadCount = Math.min(threadCount, cars.size());
@@ -74,11 +70,7 @@ public class MultiThreadCounter {
 
         int totalCount = sumResults(partialResults);
 
-        System.out.println("Искомый автомобиль: " + targetCar);
-        System.out.println("Количество потоков: " + actualThreadCount);
-        System.out.println("Количество вхождений: " + totalCount);
-
-        return totalCount;
+        return new CountResult(targetCar, totalCount, threadCount, actualThreadCount);
     }
 
     /**
